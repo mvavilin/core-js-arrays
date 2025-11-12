@@ -279,7 +279,7 @@ function createNDimensionalArray(n, size) {
     .map(() => createNDimensionalArray(n - 1, size));
 }
 
-/**
+/** b
  * Flattens a nested array into a single-level array.
  *
  * @param {any[]} nestedArray - The nested array to be flattened.
@@ -324,8 +324,15 @@ function selectMany(arr, childrenSelector) {
  *   calculateBalance([ [ 10, 8 ], [ 1, 5 ] ])  => (10 - 8) + (1 - 5) = 2 + -4 = -2
  *   calculateBalance([]) => 0
  */
-function calculateBalance(/* arr */) {
-  throw new Error('Not implemented');
+function calculateBalance(arr) {
+  if (!arr.length) return 0;
+  const initialValue = 0;
+  const balance = arr.reduce(
+    (accumulator, currentValue) =>
+      accumulator + currentValue[0] - currentValue[1],
+    initialValue
+  );
+  return balance;
 }
 
 /**
@@ -340,8 +347,10 @@ function calculateBalance(/* arr */) {
  *    createChunks(['a', 'b', 'c', 'd', 'e'], 2) => [['a', 'b'], ['c', 'd'], ['e']]
  *    createChunks([10, 20, 30, 40, 50], 1) => [[10], [20], [30], [40], [50]]
  */
-function createChunks(/* arr, chunkSize */) {
-  throw new Error('Not implemented');
+function createChunks(arr, chunkSize) {
+  return Array.from({ length: Math.ceil(arr.length / chunkSize) }, (_, i) =>
+    arr.slice(i * chunkSize, i * chunkSize + chunkSize)
+  );
 }
 
 /**
@@ -371,8 +380,13 @@ function generateOdds(len) {
  *   getElementByIndices(['one','two','three'], [2]) => 'three'  (arr[2])
  *   getElementByIndices([[[ 1, 2, 3]]], [ 0, 0, 1 ]) => 2        (arr[0][0][1])
  */
-function getElementByIndices(/* arr, indices */) {
-  throw new Error('Not implemented');
+function getElementByIndices(arr, indices) {
+  // if (indices.length === 1) return arr[indices[0]];
+  // return getElementByIndices(arr[indices[0]], indices.slice(1));
+  return indices.reduce(
+    (accumulator, currentValue) => accumulator[currentValue],
+    arr
+  );
 }
 
 /**
@@ -430,8 +444,12 @@ function getIdentityMatrix(n) {
  *    getIndicesOfOddNumbers([2, 4, 6, 8, 10]) => []
  *    getIndicesOfOddNumbers([11, 22, 33, 44, 55]) => [0, 2, 4]
  */
-function getIndicesOfOddNumbers(/* numbers */) {
-  throw new Error('Not implemented');
+function getIndicesOfOddNumbers(numbers) {
+  const initialValue = [];
+  return numbers.reduce((accumulator, currentValue, currentIndex) => {
+    if (currentValue % 2) accumulator.push(currentIndex);
+    return accumulator;
+  }, initialValue);
 }
 
 /**
@@ -444,8 +462,10 @@ function getIndicesOfOddNumbers(/* numbers */) {
  *    getHexRGBValues([ 0, 255, 16777215]) => [ '#000000', '#0000FF', '#FFFFFF' ]
  *    getHexRGBValues([]) => []
  */
-function getHexRGBValues(/* arr */) {
-  throw new Error('Not implemented');
+function getHexRGBValues(arr) {
+  return arr.map(
+    (value) => `#${value.toString(16).toUpperCase().padStart(6, 0)}`
+  );
 }
 
 /**
